@@ -19,5 +19,5 @@ def create_condensed_status(status):
     }
 
 
-def lambda_handler():
+def lambda_handler(event, context):
     print([create_condensed_status(status) for status in statuses])
