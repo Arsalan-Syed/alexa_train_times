@@ -27,8 +27,8 @@ def move_dependencies():
     library_folders = [x for x in lib if "dist-info" not in x]
 
     for x in library_folders:
-        src = "%s\\lib\\%s" % (os.getcwd(), x)
-        dst = "%s\\target" % (os.getcwd())
+        src = os.getcwd() + "\\lib\\" + x
+        dst = os.getcwd() + "\\target"
         shutil.move(src, dst)
 
 
@@ -66,7 +66,10 @@ def create_zip():
     subprocess.call([
         'C:\\Program Files\\7-Zip\\7z.exe',
         'a',
-        'code.zip'
+        '-tzip',
+        'code.zip',
+        '*.py',
+        '*/*.py'
     ])
     os.chdir("..")
 
