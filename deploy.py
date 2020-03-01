@@ -27,17 +27,21 @@ def move_dependencies():
     library_folders = [x for x in lib if "dist-info" not in x]
 
     for x in library_folders:
-        src = os.getcwd() + "\\lib\\" + x
-        dst = os.getcwd() + "\\target"
+        src = "%s\\lib\\%s" % (os.getcwd(), x)
+        dst = "%s\\target" % (os.getcwd())
         shutil.move(src, dst)
 
 
 def copy_source_files():
     for x in os.listdir("src"):
-        if x != "__init__.py":
+        if x not in ["__init__.py", "__pycache__", "lambda_function.py"]:
             src = os.getcwd() + "\\src\\" + x
-            dst = os.getcwd() + "\\target"
+            dst = os.getcwd() + "\\target\\src\\" + x
             shutil.copy(src, dst)
+
+    src = os.getcwd() + "\\src\\lambda_function.py"
+    dst = os.getcwd() + "\\target\\lambda_function.py"
+    shutil.copy(src, dst)
 
 
 def remove_dependencies():
@@ -80,6 +84,7 @@ def upload_zip_to_aws():
 def main():
     create_folder("lib")
     create_folder("target")
+    create_folder("target/src")
     install_requirements()
     delete_dist_info_folders()
     move_dependencies()
